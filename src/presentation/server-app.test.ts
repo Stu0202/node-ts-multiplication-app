@@ -1,3 +1,4 @@
+import { log } from "console";
 import { CreateTable } from "../domain/use-cases/create-table.use.case";
 import { SaveFile } from "../domain/use-cases/save-file.use.case";
 import { ServerApp } from "./server-app"
@@ -44,4 +45,33 @@ describe('Pruebas en server-app', () => {
             fileName: options.fileName
         })
       })
+
+
+      test('should run with custom values mocked', () => { 
+    
+          const logMock = jest.fn()
+          const createMock = jest.fn()
+          const saveFileMock = jest.fn()
+
+          console.log =logMock
+          CreateTable.prototype.execute = createMock.mockReturnValue(' 2 x 1 = 2')
+          SaveFile.prototype.execute = saveFileMock.mockReturnValue(true)
+
+
+
+
+          ServerApp.run(options);
+
+          expect( logMock).toHaveBeenCalledWith('Server running...');
+          expect( createMock).toHaveBeenCalledWith({base:options.base, limit:options.limit})
+          expect( saveFileMock).toHaveBeenCalledWith({
+            fileContent:  ' 2 x 1 = 2',
+            fileDestination: options.fileDestination,
+            fileName: options.fileName
+          })
+
+          expect(logMock).toHaveBeenLastCalledWith('File created!')
+        
+
+       })
  })
