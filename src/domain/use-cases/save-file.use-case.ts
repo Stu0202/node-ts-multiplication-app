@@ -16,7 +16,7 @@ export class SaveFile implements SaveFileUseCase{
     execute({
         fileContent, 
         fileDestination = 'outputs',
-        fileName = 'table'
+        fileName = 'multiplication table'
     }: Options):boolean{
         
         try {
