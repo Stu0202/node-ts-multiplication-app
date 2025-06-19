@@ -22,7 +22,14 @@ export const yarg = yargs(process.argv)
     .option('s',{
         alias:'show',
         type: 'boolean',
-        default: false,
+        default: false, //Si le pasamos la bandera por consola automaticamente cambia a true
         describe: 'Show multiplication table'
+    })
+    .check( ( argv, options ) => {
+
+        if(argv.b < 1 ) throw 'Error: base must be a positive number';
+        
+
+        return true
     })
     .parseSync() // hace que yargs lea y devuelva los argumentos de la terminal ya validados y convertidos. Sin él
